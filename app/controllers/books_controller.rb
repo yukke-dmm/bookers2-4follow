@@ -11,7 +11,11 @@ class BooksController < ApplicationController
   	@books = Book.all #一覧表示するためにBookモデルの情報を全てくださいのall
     @book = Book.new
     book = BookComment.new
+    # bookのidを持ってくる
+    @books.each do |book|
+    @user = User.find_by(id: book.user_id)
   end
+end
 
   def create
   	@book = Book.new(book_params)

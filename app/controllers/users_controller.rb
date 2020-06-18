@@ -10,8 +10,14 @@ class UsersController < ApplicationController
 
   def index
   	@users = User.all #一覧表示するためにUserモデルのデータを全て変数に入れて取り出す。
-  	@book = Book.new #new bookの新規投稿で必要（保存処理はbookコントローラー側で実施）
+  	@book = Book.new
+     #new bookの新規投稿で必要（保存処理はbookコントローラー側で実施）
+    @books = Book.all
+    # bookのidを持ってくる
+    @books.each do |book|
+    @user = User.find_by(id: book.user_id)
   end
+end
 
   def edit
     @user = User.find(params[:id])
@@ -35,10 +41,9 @@ class UsersController < ApplicationController
   end
 
   #url直接防止　メソッドを自己定義してbefore_actionで発動。
-   def baria_user
+  def baria_user
   	unless params[:id].to_i == current_user.id
   		redirect_to user_path(current_user)
-  	end
-   end
- 
+    end
+  end
 end
